@@ -1,0 +1,15 @@
+apply plugin: 'greeting'
+apply plugin: 'com.droidtitan.lintcleaner'
+
+buildscript {
+    repositories {
+        maven {
+            url uri('../repo')
+        }
+    }
+    dependencies {
+        classpath('com.hello:greeting:1.0.0')
+        classpath('com.droidtitan:lint-cleaner-plugin-master:0.3.0')
+    }
+}
+

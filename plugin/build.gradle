@@ -1,0 +1,51 @@
+plugins {
+	id 'nu.studer.plugindev' version '1.0.3'
+}
+
+apply plugin: 'groovy'
+apply plugin: 'idea'
+apply plugin: 'maven'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile localGroovy()
+    compile gradleApi()
+}
+
+
+group = 'com.hello'
+version = '1.0.0'
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: uri('../repo'))
+        }
+    }
+}
+
+plugindev {
+    pluginId = 'com.hello.greeting'
+    pluginName = 'greeting'
+    pluginImplementationClass 'com.hello.GreetingPlugin'
+    pluginDescription 'Gradle plugin that ...'
+    pluginLicenses 'Apache-2.0'
+    pluginTags 'greeting', 'hello'
+    authorId 'zenanhu'
+    authorName 'zenanhu'
+    authorEmail '2smallcats@gmail.com'
+    projectUrl 'http://your/project/url'
+    projectIssuesUrl 'http://your/project/issues'
+    projectVcsUrl 'http://your/project/vcs' 
+    projectInceptionYear '2015'
+    done()
+}
+ 
+bintray {
+    user = "zenanhu"
+    key = "eda35120c618e665d7a136f32f8e6472240fafe2"
+    pkg.repo = 'maven'
+}

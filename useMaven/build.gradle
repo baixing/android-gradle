@@ -1,0 +1,13 @@
+apply plugin: 'greeting'
+
+buildscript {
+    repositories {
+        maven {
+            url "http://dl.bintray.com/zenanhu/maven"
+        }
+    }
+    dependencies {
+        classpath('com.hello:greeting:1.0.0')
+    }
+}
+
