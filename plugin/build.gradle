@@ -1,51 +1,92 @@
-plugins {
-	id 'nu.studer.plugindev' version '1.0.3'
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.1.0'
+    }
 }
 
-apply plugin: 'groovy'
-apply plugin: 'idea'
-apply plugin: 'maven'
-
-repositories {
-    mavenCentral()
+allprojects {
+    repositories {
+        jcenter()
+    }
 }
 
-dependencies {
-    compile localGroovy()
-    compile gradleApi()
-}
-
+//apply plugin: 'com.android.library'
+//
+//android {
+//    compileSdkVersion 19
+//    buildToolsVersion "19.1.0"
+//
+//    defaultConfig {
+//        minSdkVersion 19
+//        targetSdkVersion 19
+//    }
+//
+//    sourceSets {
+//        main {
+//            java.srcDirs = ['src/main/groovy']
+//            resources.srcDirs = ['src/main/groovy']
+//            aidl.srcDirs = ['src/main/groovy']
+//            renderscript.srcDirs = ['src/main/groovy']
+//            res.srcDirs = ['src/main/groovy']
+//            assets.srcDirs = ['assets']
+//            jniLibs.srcDirs = ['jniLibs']
+//        }
+//
+//        debug.setRoot('build-types/debug')
+//        release.setRoot('build-types/release')
+//    }
+//}
+apply plugin: 'java'
 
 group = 'com.hello'
 version = '1.0.0'
 
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            repository(url: uri('../repo'))
-        }
+apply plugin: 'maven'  
+def isReleaseBuild() {  
+    return VERSION_NAME.contains("SNAPSHOT") == false  
+}  
+def getRepositoryUsername() {  
+    return hasProperty('NEXUS_USERNAME') ? NEXUS_USERNAME : ""  
+}  
+def getRepositoryPassword() {  
+    return hasProperty('NEXUS_PASSWORD') ? NEXUS_PASSWORD : ""  
+}  
+afterEvaluate { project ->  
+    uploadArchives {  
+        repositories {  
+            mavenDeployer {  
+                pom.groupId = GROUP  
+                pom.artifactId = POM_ARTIFACT_ID  
+                pom.version = VERSION_NAME  
+                repository(url: RELEASE_REPOSITORY_URL) {  
+                    authentication(userName: getRepositoryUsername(), password: getRepositoryPassword())  
+                }  
+                snapshotRepository(url: SNAPSHOT_REPOSITORY_URL) {  
+                    authentication(userName: getRepositoryUsername(), password: getRepositoryPassword())  
+                }  
+            }  
+        }  
     }
-}
-
-plugindev {
-    pluginId = 'com.hello.greeting'
-    pluginName = 'greeting'
-    pluginImplementationClass 'com.hello.GreetingPlugin'
-    pluginDescription 'Gradle plugin that ...'
-    pluginLicenses 'Apache-2.0'
-    pluginTags 'greeting', 'hello'
-    authorId 'zenanhu'
-    authorName 'zenanhu'
-    authorEmail '2smallcats@gmail.com'
-    projectUrl 'http://your/project/url'
-    projectIssuesUrl 'http://your/project/issues'
-    projectVcsUrl 'http://your/project/vcs' 
-    projectInceptionYear '2015'
-    done()
-}
- 
-bintray {
-    user = "zenanhu"
-    key = "eda35120c618e665d7a136f32f8e6472240fafe2"
-    pkg.repo = 'maven'
-}
+//    task androidJavadocs(type: Javadoc) {
+//        source = android.sourceSets.main.java.srcDirs
+//        println "hello world"
+//        println source
+//        println "\n"
+//        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+//    }
+//    task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
+//        classifier = 'javadoc'
+//        from androidJavadocs.destinationDir
+//    }
+//    task androidSourcesJar(type: Jar) {
+//        classifier = 'sources'
+//        from android.sourceSets.main.java.sourceFiles
+//    }
+//    artifacts {
+//        archives androidSourcesJar
+////        archives androidJavadocsJar
+//    }
+}  
