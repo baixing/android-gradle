@@ -3,6 +3,6 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.hello</groupId>
-  <artifactId>greeting</artifactId>
+  <artifactId>lint-cleaner-plugin-master</artifactId>
   <version>1.0.0</version>
 </project>

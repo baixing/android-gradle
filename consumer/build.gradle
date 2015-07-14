@@ -1,15 +1,17 @@
-apply plugin: 'greeting'
-apply plugin: 'com.droidtitan.lintcleaner'
+
+//apply plugin: 'com.droidtitan.lintcleaner'
 
 buildscript {
     repositories {
         maven {
-            url uri('../repo')
+            //url uri('../repo')
+            url uri("http://192.168.2.160:8081/nexus/content/repositories/thirdparty/");
         }
     }
     dependencies {
         classpath('com.hello:greeting:1.0.0')
-        classpath('com.droidtitan:lint-cleaner-plugin-master:0.3.1')
+       // classpath('com.droidtitan:lint-cleaner-plugin-master:0.3.1')
     }
 }
 
+apply plugin: 'greeting'
