@@ -1,0 +1,18 @@
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+apply plugin: "groovy"
+apply plugin: "maven"
+
+archivesBaseName = "android-plugin"
+version = "1.0"
+group "com.baixing.tools.build"
+
+dependencies {
+    compile localGroovy()
+    compile gradleApi()
+    compile 'com.android.tools.build:gradle-api:2.1.0'
+}
+
