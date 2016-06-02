@@ -44,11 +44,6 @@ class AppPlugin implements Plugin<Project> {
         Task javac = variant.javaCompile
 
         bundle.with {
-            bundle.aapt = aapt
-
-            File symbolDir = aapt.textSymbolOutputDir
-            symbolFile = new File(symbolDir, 'R.txt')
-
             packageName = variant.applicationId
             packagePath = packageName.replaceAll('\\.', '/')
         }
@@ -110,7 +105,7 @@ class AppPlugin implements Plugin<Project> {
         }
 
         // Modify assets
-        prepareSplit()
+        prepareSplit(new File(aaptTask.textSymbolOutputDir, 'R.txt'))
         File sourceOutputDir = aaptTask.sourceOutputDir
         File rJavaFile = new File(sourceOutputDir, "${bundle.packagePath}/R.java")
         def rev = project.android.buildToolsRevision
@@ -139,8 +134,7 @@ class AppPlugin implements Plugin<Project> {
     /**
      * Prepare retained resource types and resource id maps for package slicing
      */
-    protected void prepareSplit() {
-        def idsFile = bundle.symbolFile
+    protected void prepareSplit(idsFile) {
         if (!idsFile.exists()) return
 
         def bundleEntries = SymbolParser.getResourceEntries(idsFile)

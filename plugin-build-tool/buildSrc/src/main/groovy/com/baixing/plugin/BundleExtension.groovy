@@ -6,11 +6,7 @@ import org.gradle.api.Task
 public class BundleExtension {
 
     /** Package id of bundle */
-    //int packageId = 0x2f
     int packageId
-
-    Task aapt
-    File symbolFile
 
     String packageName
     String packagePath
