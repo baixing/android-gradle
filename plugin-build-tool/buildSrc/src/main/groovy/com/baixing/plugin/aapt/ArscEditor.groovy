@@ -241,7 +241,7 @@ public class ArscEditor extends AssetEditor {
         lib.entries.add(libEntry)
 
         // Reset sizes & offsets
-        int size = lib.header.size
+        def size = lib.header.size
         t.typeList.specs.each { ts ->
             size += ts.header.size
             ts.configs.each {
