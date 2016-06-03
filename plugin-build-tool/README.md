@@ -10,10 +10,11 @@ Apply the plugin in your `build.gradle`:
 buildscript {
   repositories {
     mavenCentral()
+    //baixingMaven()
   }
   dependencies {
     classpath 'com.android.tools.build:gradle:2.1.0'
-    classpath 'com.baixing.tools.build:android-plugin:1.0'
+    classpath 'com.baixing.tools.build:android-plugin:0.8'
   }
 }
 
@@ -29,4 +30,10 @@ apply后，插件会自动查找项目中的android插件，并做资源id的替
 bundle {
     packageId = 0x2f
 }
+```
+
+## 修改后发版
+
+```groovy
+gradle publish
 ```
