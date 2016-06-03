@@ -93,6 +93,13 @@ class AppPlugin implements Plugin<Project> {
             }
         }
 
+        if(null != bundle.outputDir) {
+            def outputFile = new File(bundle.outputDir, 'armeabi/lib-' + project.name + '.so');
+            variant.outputs.each { out ->
+                out.outputFile = outputFile
+            }
+        }
+
     }
 
     private void aaptLast(aaptTask) {

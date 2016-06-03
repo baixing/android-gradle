@@ -7,6 +7,7 @@ public class BundleExtension {
 
     /** Package id of bundle */
     int packageId
+    File outputDir
 
     String packageName
     String packagePath

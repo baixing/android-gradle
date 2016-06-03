@@ -26,6 +26,10 @@ configure(project(':test')) {
     apply plugin: 'com.baixing.gradle.bundle.plugin'
 
     bundle {
+        outputDir = new File(project(':test').projectDir, 'bundles')
+    }
+
+    bundle {
         packageId = 0x2f
     }
 }

@@ -6,6 +6,10 @@ repositories {
 apply plugin: "groovy"
 apply plugin: "maven"
 
+archivesBaseName = POM_ARTIFACT_ID
+version = VERSION_NAME
+group = GROUP
+
 dependencies {
     compile localGroovy()
     compile gradleApi()
