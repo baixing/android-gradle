@@ -97,7 +97,7 @@ class AppPlugin implements Plugin<Project> {
         }
 
         variant.assemble.doLast {
-            if(bakDir.exists()) {
+            if(null != bakDir && bakDir.exists()) {
                 moveRFile(bakDir, javacDest)
                 bakDir.deleteDir()
             }
