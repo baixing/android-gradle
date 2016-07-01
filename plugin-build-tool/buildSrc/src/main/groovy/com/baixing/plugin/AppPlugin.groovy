@@ -81,15 +81,25 @@ class AppPlugin implements Plugin<Project> {
             it.consumedInputStreams = newInputs
         }
 
+        File javacDest
+        File bakDir
+
         // R.xxx只参与编译不参与打包
         javac.doLast {
             File classesDir = it.destinationDir
 
+            javacDest = classesDir
+            bakDir = new File(classesDir.getParent(), 'tmp')
+            bakDir.mkdir()
+
             // Delete the original generated R$xx.class or R.class
-            classesDir.eachFileRecurse(FileType.FILES) { f ->
-                if (f.name.startsWith('R$') || 'R.class'.equals(f.name)) {
-                    f.delete()
-                }
+            moveRFile(classesDir, bakDir)
+        }
+
+        variant.assemble.doLast {
+            if(bakDir.exists()) {
+                moveRFile(bakDir, javacDest)
+                bakDir.deleteDir()
             }
         }
 
@@ -100,6 +110,16 @@ class AppPlugin implements Plugin<Project> {
             }
         }
 
+    }
+
+    private void moveRFile(File src, File dest) {
+        src.eachFileRecurse(FileType.FILES) { f ->
+            if (f.name.startsWith('R$') || 'R.class'.equals(f.name)) {
+                String path = f.getAbsolutePath().substring(src.getAbsolutePath().length())
+                File toFile = new File(dest, path)
+                project.ant.move(file: f, tofile: toFile)
+            }
+        }
     }
 
     private void aaptLast(aaptTask) {

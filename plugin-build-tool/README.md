@@ -38,5 +38,6 @@ bundle {
 ## 修改后发版
 
 ```groovy
+cd buildSrc/
 gradle publish
 ```
